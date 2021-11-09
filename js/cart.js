@@ -7,6 +7,13 @@ const cart = () => {
   const btnClearCart = modalCart.querySelector(".clear-cart");
   const fullPrice = modalCart.querySelector(".modal-pricetag");
 
+  const totalPrice = (data) => {
+    fullPrice.textContent = `${[...data].reduce(
+      (accumulator, currentValue) => accumulator + currentValue.price * currentValue.count,
+      0
+    )} ₽`;
+  };
+
   const resetCart = () => {
     body.innerHTML = "";
     localStorage.removeItem("cart");
@@ -37,13 +44,6 @@ const cart = () => {
     localStorage.setItem("cart", JSON.stringify(cartArray));
     renderItems(cartArray);
   };
-  //Отрисовка общей стоимости -
-  // const renderFullPrice = ({ price }) => {
-  //   fullPrice.innerHTML = "";
-  //   price.reduce((a, b) => {
-  //     return (fullPrice.innerHTML = a + b);
-  //   });
-  // };
 
   const renderItems = (data) => {
     body.innerHTML = "";
@@ -65,6 +65,7 @@ const cart = () => {
 
       body.append(cartElem);
     });
+    totalPrice(data);
   };
 
   body.addEventListener("click", (e) => {
@@ -96,7 +97,6 @@ const cart = () => {
   buttonCart.addEventListener("click", () => {
     if (JSON.parse(localStorage.getItem("cart"))) {
       renderItems(JSON.parse(localStorage.getItem("cart")));
-      //renderFullPrice(JSON.parse(localStorage.getItem("cart")));
     }
     modalCart.classList.add("is-open");
   });
