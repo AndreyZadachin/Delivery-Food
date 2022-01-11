@@ -1,11 +1,11 @@
 const cart = () => {
-  const buttonCart = document.querySelector(".button-cart");
-  const modalCart = document.querySelector(".modal-cart");
-  const close = modalCart.querySelector(".close");
-  const body = modalCart.querySelector(".modal-body");
-  const buttonSend = modalCart.querySelector(".button-primary");
-  const btnClearCart = modalCart.querySelector(".clear-cart");
-  const fullPrice = modalCart.querySelector(".modal-pricetag");
+  const buttonCart = document.querySelector('.button-cart');
+  const modalCart = document.querySelector('.modal-cart');
+  const close = modalCart.querySelector('.close');
+  const body = modalCart.querySelector('.modal-body');
+  const buttonSend = modalCart.querySelector('.button-primary');
+  const btnClearCart = modalCart.querySelector('.clear-cart');
+  const fullPrice = modalCart.querySelector('.modal-pricetag');
 
   const totalPrice = (data) => {
     fullPrice.textContent = `${[...data].reduce(
@@ -15,13 +15,14 @@ const cart = () => {
   };
 
   const resetCart = () => {
-    body.innerHTML = "";
-    localStorage.removeItem("cart");
-    modalCart.classList.remove("is-open");
+    body.innerHTML = '';
+    fullPrice.innerHTML = '';
+    localStorage.removeItem('cart');
+    modalCart.classList.remove('is-open');
   };
 
   const incrementCount = (id) => {
-    const cartArray = JSON.parse(localStorage.getItem("cart"));
+    const cartArray = JSON.parse(localStorage.getItem('cart'));
 
     cartArray.map((item) => {
       if (item.id === id) {
@@ -29,11 +30,11 @@ const cart = () => {
       }
       return item;
     });
-    localStorage.setItem("cart", JSON.stringify(cartArray));
+    localStorage.setItem('cart', JSON.stringify(cartArray));
     renderItems(cartArray);
   };
   const decrementCount = (id) => {
-    const cartArray = JSON.parse(localStorage.getItem("cart"));
+    const cartArray = JSON.parse(localStorage.getItem('cart'));
 
     cartArray.map((item) => {
       if (item.id === id) {
@@ -41,17 +42,17 @@ const cart = () => {
       }
       return item;
     });
-    localStorage.setItem("cart", JSON.stringify(cartArray));
+    localStorage.setItem('cart', JSON.stringify(cartArray));
     renderItems(cartArray);
   };
 
   const renderItems = (data) => {
-    body.innerHTML = "";
+    body.innerHTML = '';
 
     data.forEach(({ name, price, id, count }) => {
-      const cartElem = document.createElement("div");
+      const cartElem = document.createElement('div');
 
-      cartElem.classList.add("food-row");
+      cartElem.classList.add('food-row');
 
       cartElem.innerHTML = `
         <span class="food-name">${name}</span>
@@ -68,20 +69,20 @@ const cart = () => {
     totalPrice(data);
   };
 
-  body.addEventListener("click", (e) => {
+  body.addEventListener('click', (e) => {
     e.preventDefault();
-    if (e.target.classList.contains("btn-inc")) {
+    if (e.target.classList.contains('btn-inc')) {
       incrementCount(e.target.dataset.index);
-    } else if (e.target.classList.contains("btn-dec")) {
+    } else if (e.target.classList.contains('btn-dec')) {
       decrementCount(e.target.dataset.index);
     }
   });
 
-  buttonSend.addEventListener("click", () => {
-    const cartArray = localStorage.getItem("cart");
+  buttonSend.addEventListener('click', () => {
+    const cartArray = localStorage.getItem('cart');
 
-    fetch("https://jsonplaceholder.typicode.com/posts", {
-      method: "POST",
+    fetch('https://jsonplaceholder.typicode.com/posts', {
+      method: 'POST',
       body: cartArray,
     })
       .then((response) => {
@@ -94,19 +95,19 @@ const cart = () => {
       });
   });
 
-  buttonCart.addEventListener("click", () => {
-    if (JSON.parse(localStorage.getItem("cart"))) {
-      renderItems(JSON.parse(localStorage.getItem("cart")));
+  buttonCart.addEventListener('click', () => {
+    if (JSON.parse(localStorage.getItem('cart'))) {
+      renderItems(JSON.parse(localStorage.getItem('cart')));
     }
-    modalCart.classList.add("is-open");
+    modalCart.classList.add('is-open');
   });
 
-  btnClearCart.addEventListener("click", () => {
+  btnClearCart.addEventListener('click', () => {
     resetCart();
   });
 
-  close.addEventListener("click", () => {
-    modalCart.classList.remove("is-open");
+  close.addEventListener('click', () => {
+    modalCart.classList.remove('is-open');
   });
 };
 
