@@ -1,6 +1,6 @@
 # Delivery-Food
 
-## https://github.com/AndreyZadachin/Delivery-Food/index.html
+## https://andreyzadachin.github.io/Delivery-Food/index.html
 
 ======
 
