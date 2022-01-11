@@ -1,15 +1,15 @@
 const partners = () => {
-  const cardsRestaurants = document.querySelector(".cards-restaurants");
-  const modalAuth = document.querySelector(".modal-auth");
+  const cardsRestaurants = document.querySelector('.cards-restaurants');
+  const modalAuth = document.querySelector('.modal-auth');
 
   const renderItems = (data) => {
     data.forEach((item) => {
       const { image, name, time_of_delivery, stars, price, kitchen, products } = item;
-      const a = document.createElement("a");
+      const a = document.createElement('a');
 
-      a.setAttribute("href", "/restaurant.html");
-      a.classList.add("card");
-      a.classList.add("card-restaurant");
+      a.setAttribute('href', './restaurant.html');
+      a.classList.add('card');
+      a.classList.add('card-restaurant');
 
       a.dataset.products = products;
 
@@ -28,15 +28,15 @@ const partners = () => {
               </div>
     `;
 
-      a.addEventListener("click", (e) => {
+      a.addEventListener('click', (e) => {
         e.preventDefault();
         //Проверка на авторизацию перед открытием карточки ресторана
-        if (localStorage.getItem("user")) {
-          localStorage.setItem("restaurant", JSON.stringify(item));
-          window.location.href = "/restaurant.html";
+        if (localStorage.getItem('user')) {
+          localStorage.setItem('restaurant', JSON.stringify(item));
+          window.location.href = './restaurant.html';
         } else {
           e.preventDefault();
-          modalAuth.style.display = "flex";
+          modalAuth.style.display = 'flex';
         }
       });
 
@@ -44,7 +44,7 @@ const partners = () => {
     });
   };
 
-  fetch("https://test-83cae-default-rtdb.firebaseio.com/db/partners.json")
+  fetch('https://test-83cae-default-rtdb.firebaseio.com/db/partners.json')
     .then((response) => response.json())
     .then((data) => {
       renderItems(data);
